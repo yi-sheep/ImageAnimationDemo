@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         list.add("https://images2.alphacoders.com/106/thumb-350-1068324.jpg");
 
         // 对recyclerView做适配
-        mImageAdapter = new ImageAdapter(R.layout.item_image,list); // 实例化适配器
+        mImageAdapter = new ImageAdapter(R.layout.item_image, list); // 实例化适配器
         mImage_recyclerView = findViewById(R.id.image_recyclerView); // 实例化recyclerView控件
         mImage_recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2)); // 设置布局面板 这里设置的是网格布局一排放两个
         mImage_recyclerView.setAdapter(mImageAdapter); // 设置适配器
@@ -73,23 +73,24 @@ public class MainActivity extends AppCompatActivity {
         mImageAdapter.setOnItemClickListener(((adapter, view, position) -> {
             ImageView item_iv = view.findViewById(R.id.item_image); // 初始化点击的item_image控件
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                share(item_iv,position); // 将点击的子控件和它在recyclerView的位置共享给下一个activity
+                share(item_iv, position); // 将点击的子控件和它在recyclerView的位置共享给下一个activity
             }
         }));
     }
 
     /**
      * activity之间共享view
+     *
      * @param view
      * @param position
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void share(View view, int position) {
         Intent intent = new Intent(MainActivity.this, ImageActivity.class); // 实例化一个显示意图
-        intent.putStringArrayListExtra(ImageActivity.IMG_KEY,list); // 将数据列表传递到下一个activity
+        intent.putStringArrayListExtra(ImageActivity.IMG_KEY, list); // 将数据列表传递到下一个activity
         intent.putExtra(ImageActivity.IMG_POSITION, position); // 把点击的图片索引位置传递过去
-        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this,view,"share").toBundle(); // 制作场景过渡动画
-        startActivity(intent,bundle); // 启动Activity
+        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this, view, "share").toBundle(); // 制作场景过渡动画
+        startActivity(intent, bundle); // 启动Activity
     }
 
     @Override
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         if (mImageAdapter != null) {
-            return mImageAdapter.getViewByPosition(position,R.id.item_image);
+            return mImageAdapter.getViewByPosition(position, R.id.item_image);
         }
         return null;
     }
